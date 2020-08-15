@@ -134,7 +134,7 @@ def font_identifier(image_path):
     for object in objects:
 
         #Cal TextRectangle angle A, start point A(x0, y0) and endpoint B(x1, y1)
-        A = object['TextRectangles']['Angle'] / 180
+        A = object['TextRectangles']['Angle'] / 180.0
         x0, y0 = object['TextRectangles']['Left'], object['TextRectangles']['Top']
         x1, y1 = x0 + object['TextRectangles']['Width'], y0 + object['TextRectangles']['Height']
 
@@ -142,7 +142,7 @@ def font_identifier(image_path):
         v_x0, v_y0 = x1 - x0, y1 - y0
 
         #Cal angle A rotated and 1/2 lenthed vector AB' = (v_x1, v_y1)
-        v_x1, v_y1 = (v_x0 * math.cos(A) - v_y0 * math.sin(A)) / 2, (v_y0 * math.cos(A) + v_x0 * math.sin(A)) / 2
+        v_x1, v_y1 = (v_x0 * math.cos(A) - v_y0 * math.sin(A)) / 2.0, (v_y0 * math.cos(A) + v_x0 * math.sin(A)) / 2.0
 
         #Cal TextRectangle center point B'(x2, y2)
         x2, y2 = x0 + v_x1, y0 + v_y1
@@ -157,7 +157,7 @@ def font_identifier(image_path):
 
     print('Min_Index -> ', index_min)
 
-    A = - objects[index_min]['TextRectangles']['Angle'] / 180
+    A = - objects[index_min]['TextRectangles']['Angle'] / 180.0
 
     roi = PIL.Image.open(image_path)
     roi = roi.rotate(A)
