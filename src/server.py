@@ -231,7 +231,7 @@ def api():
                             obj, ft = font_identifier(path)
 
                             #Instruct response
-                            json = '{"Font": "' + str(ft) + '", "Text": "' + str(obj['Text']) + '", "Rect": ' + str(obj['TextRectangles']) + ', "Time":' + str(time.time()) + '}'
+                            json = '{"Font": "' + str(ft) + '", "Text": "' + str(obj['Text']) + '", "Rect": ' + str(obj['TextRectangles']).replace('\'', '"') + ', "Time":' + str(time.time()) + '}'
                             response = app.response_class(response = flask.json.dumps(json), status = response.status_code, mimetype = 'application/json')
 
                         except Exception as error:
