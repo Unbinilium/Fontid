@@ -122,6 +122,9 @@ def font_identifier(image_path):
     #Parse json response
     parsed = json.loads(response)
 
+    print('Response ->')
+    print(json.dumps(parsed, indent = 4, sort_keys = True))
+
     distances = []
     objects = parsed['Data']['Results']
 
@@ -151,6 +154,7 @@ def font_identifier(image_path):
         distances.append(d)
 
     index_min = distances.index(min(distances))
+
     print('Min_Index -> ', index_min)
 
     A = - objects[index_min]['TextRectangles']['Angle'] / 180
@@ -221,27 +225,35 @@ def api():
                     #Verify Image SHA1
                     if verify == image_sha1:
                         response.status_code = 200
+
+                        #Exec Font Identifier
+                        obj, ft = font_identifier(path)
+
+                        #Delete recieved Image
+                        command = 'rm -f ' + path
+                        os.system(command)
+
+                        #Instruct response
+                        json = '{"Font": "' + str(ft) + '", "Text": "' + str(obj['Text']) + '", "Rect": ' + str(obj['TextRectangles']) + ', "Time":' + str(time.time()) + '}'
+                        response = app.response_class(response = flask.json.dumps(json), status = response.status_code, mimetype = 'application/json')
+
                     else:
-                        response.status_code = 415
+                        #Precondition Failed (SHA1 Verify Failed)
+                        response.status_code = 412
+
                 else:
+                    #Unsupported Image Type
                     response.status_code = 415
+                    print('Extension ->', image_ext)
+                    
             else:
-                response.status_code = 400
-                print('Extension ->', image_ext)
+                #Not Authorized
+                response.status_code = 401
 
         except Exception as error:
+            #Request Error
             response.status_code = 400
             print('Error -> ', error)
-
-        obj, ft = font_identifier(path)
-
-        #Delete recieved Image
-        command = 'rm -f ' + path
-        os.system(command)
-
-        #Instruct response
-        json = '{"Font": "' + str(ft) + '", "Text": "' + str(obj['Text']) + '", "Rect": ' + str(obj['TextRectangles']) + ', "Time":' + str(time.time()) + '}'
-        response = app.response_class(response = flask.json.dumps(json), status = response.status_code, mimetype = 'application/json')
         
         return response
 
