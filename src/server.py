@@ -227,15 +227,21 @@ def api():
                         response.status_code = 200
 
                         #Exec Font Identifier
-                        obj, ft = font_identifier(path)
+                        try:
+                            obj, ft = font_identifier(path)
+
+                            #Instruct response
+                            json = '{"Font": "' + str(ft) + '", "Text": "' + str(obj['Text']) + '", "Rect": ' + str(obj['TextRectangles']) + ', "Time":' + str(time.time()) + '}'
+                            response = app.response_class(response = flask.json.dumps(json), status = response.status_code, mimetype = 'application/json')
+
+                        except Exception as error:
+                            #Server Error
+                            response.status_code = 502
+                            print('Error -> ', error)
 
                         #Delete recieved Image
                         command = 'rm -f ' + path
                         os.system(command)
-
-                        #Instruct response
-                        json = '{"Font": "' + str(ft) + '", "Text": "' + str(obj['Text']) + '", "Rect": ' + str(obj['TextRectangles']) + ', "Time":' + str(time.time()) + '}'
-                        response = app.response_class(response = flask.json.dumps(json), status = response.status_code, mimetype = 'application/json')
 
                     else:
                         #Precondition Failed (SHA1 Verify Failed)
