@@ -236,7 +236,7 @@ def api():
         obj, ft = font_identifier(path)
 
         #Delete recieved Image
-        command = 'rm -f' + path
+        command = 'rm -f ' + path
         os.system(command)
 
         #Instruct response
