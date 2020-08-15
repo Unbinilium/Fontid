@@ -64,6 +64,16 @@ from aliyunsdkocr.request.v20191230.RecognizeCharacterRequest import RecognizeCh
 #Dir Path of server.py
 PATH = os.path.dirname(os.path.abspath(__file__))
 
+#OSS config
+oss_auth = oss2.Auth(access_key_id, access_key_secret)
+bucket = oss2.Bucket(oss_auth, endpoint, bucket_name)
+
+#OCR config
+client = AcsClient(access_key_id, access_key_secret, location)
+
+#Preload Model
+model = load_model(model_path)
+
 def rotate(x, y, o_x, o_y, theta):
     x_r = math.cos(theta) * (x - o_x) - math.sin(theta) * (y - o_y) + o_x
     y_r = math.sin(theta) * (x - o_x) + math.cos(theta) * (y - o_y) + o_y
@@ -78,13 +88,7 @@ def blur_image(img):
     return blur_img
 
 def font_identifier(image_path):
-    #OSS
-    oss_auth = oss2.Auth(access_key_id, access_key_secret)
-    bucket = oss2.Bucket(oss_auth, endpoint, bucket_name)
-
-    #OCR
-    client = AcsClient(access_key_id, access_key_secret, location)
-
+    #OCR request
     request = RecognizeCharacterRequest()
     request.set_accept_format('json')
 
@@ -168,9 +172,8 @@ def font_identifier(image_path):
     #Cal angle A rotated A'(x1, y1)
     x1, y1 = rotate(x0, y0, o_x0, o_y0, A)
 
+    #Crop text ROI
     roi = roi.crop((x1, y1, (x1 + objects[index_min]['TextRectangles']['Width']), (y1 + objects[index_min]['TextRectangles']['Height'])))
-
-    model = load_model(model_path)
 
     #Load image and de-noisy
     tmp_img = roi.copy().convert('L')
@@ -205,16 +208,19 @@ def api():
         response = flask.make_response()
 
         try:
+            #Prase args from URL, recieve image
             auth = flask.request.args['auth']
             verify = flask.request.args['verify']
             image = flask.request.files['image']
 
+            #Auth
             if auth in AUTH:
                 image_ext = os.path.splitext(image.filename)[1]
 
+                #Verify supported image type
                 if image_ext in ALLOWED_EXTENSIONS:
 
-                    #Recieve Image
+                    #Recieve Image, random uuid named, stored in /tmp
                     path = os.path.join('/tmp/', str(uuid.uuid4()) + image_ext)
                     image.save(path)
                     image_sha1 = hashlib.sha1(open(path, 'rb').read()).hexdigest()
