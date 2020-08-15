@@ -1,0 +1,12 @@
+# Generated models
+*.h5
+
+# IPython
+.ipynb_checkpoints
+*-checkpoint.ipynb
+
+#Cache
+__pycache__
+
+#VS Code
+.vscode

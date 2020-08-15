@@ -1,0 +1,11 @@
+{
+    "Access_Key_ID": "LTAI4GGHnoZxjeprgmeiWdde",
+    "Access_Key_Secret": "uDRC7ld9qiWXWQraWtqE9bFAC5Wfn8",
+    "OSS_Endpoint": "https://oss-cn-shanghai.aliyuncs.com",
+    "OSS_Bucket_Name": "unbinilium",
+    "OCR_Location": "cn-shanghai",
+    "Model_Path": "/home/unbinilium/Documents/font-identifier/models/keras.h5",
+    "Font_Name_List": "['Amiri-Regular', 'Manrope-Regular', 'Martel-Regular', 'Pacifico-Regular', 'Sacramento-Regular']",
+    "Auth_List": "['Admin', 'Unbinilium']",
+    "Allowed_Extensions_List": "['png', 'jpg', 'jpeg', 'gif']"
+}
