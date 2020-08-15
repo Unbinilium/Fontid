@@ -24,7 +24,7 @@ else:
     #OCR
     location = conf['OCR_Location']
 
-    #MODEL
+    #Model
     model_path = conf['Model_Path']
     font_names = conf['Font_Name_List']
 
@@ -61,8 +61,8 @@ import oss2
 #Aliyun SDK OCR
 from aliyunsdkocr.request.v20191230.RecognizeCharacterRequest import RecognizeCharacterRequest
 
-#Current Path
-PATH = os.path.abspath(os.getcwd())
+#Dir Path of server.py
+PATH = os.path.dirname(os.path.abspath(__file__))
 
 def rotate(x, y, o_x, o_y, theta):
     x_r = math.cos(theta) * (x - o_x) - math.sin(theta) * (y - o_y) + o_x
