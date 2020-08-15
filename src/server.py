@@ -265,6 +265,6 @@ def api():
 
     #Fallback to Path / if uses GET
     else:
-        return '<meta http-equiv="refresh" content="0;url=/"/>'
+        return '<meta http-equiv="refresh" content="0;url=/">'
 
 app.run(host = LISTEN, port = PORT, debug = False)
