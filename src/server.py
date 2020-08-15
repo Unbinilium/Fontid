@@ -31,6 +31,8 @@ else:
     #Flask Config
     AUTH = conf['Auth_List']
     ALLOWED_EXTENSIONS = conf['Allowed_Extensions_List']
+    LISTEN = conf['Listen']
+    PORT = conf['Port']
 
 #Additional Requirement
 import os
@@ -247,4 +249,4 @@ def api():
     else:
         return '<meta http-equiv="refresh" content="0;url=/"/>'
 
-app.run(host = "0.0.0.0", port = 80, debug = False)
+app.run(host = LISTEN, port = PORT, debug = False)
