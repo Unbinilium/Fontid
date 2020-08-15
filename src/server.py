@@ -132,23 +132,23 @@ def font_identifier(image_path):
     o_x0, o_y0 = int(decoded_info['ImageWidth']['value']) / 2, int(decoded_info['ImageHeight']['value']) / 2
 
     for object in objects:
-    
+
         #Cal TextRectangle angle A, start point A(x0, y0) and endpoint B(x1, y1)
         A = object['TextRectangles']['Angle'] / 180
         x0, y0 = object['TextRectangles']['Left'], object['TextRectangles']['Top']
         x1, y1 = x0 + object['TextRectangles']['Width'], y0 + object['TextRectangles']['Height']
-    
+
         #Cal vector AB = (v_x0, v_y0)
         v_x0, v_y0 = x1 - x0, y1 - y0
-    
+
         #Cal angle A rotated and 1/2 lenthed vector AB' = (v_x1, v_y1)
         v_x1, v_y1 = (v_x0 * math.cos(A) - v_y0 * math.sin(A)) / 2, (v_y0 * math.cos(A) + v_x0 * math.sin(A)) / 2
-    
+
         #Cal TextRectangle center point B'(x2, y2)
         x2, y2 = x0 + v_x1, y0 + v_y1
-    
+
         print('TextRectangleCtr -> ', (x2, y2))
-    
+
         #Cal distance between point B and O
         d = math.pow(x2 - o_x0, 2) + math.pow(y2 - o_y0, 2)
         distances.append(d)
@@ -245,7 +245,7 @@ def api():
                     #Unsupported Image Type
                     response.status_code = 415
                     print('Extension ->', image_ext)
-                    
+
             else:
                 #Not Authorized
                 response.status_code = 401
@@ -254,7 +254,7 @@ def api():
             #Request Error
             response.status_code = 400
             print('Error -> ', error)
-        
+
         return response
 
     #Fallback to Path / if uses GET
