@@ -1,4 +1,5 @@
 #Basic Requirement
+import os
 import sys
 import json
 
@@ -26,19 +27,18 @@ else:
 
     #Model
     model_path = conf['Model_Path']
-    font_names = json.load(open(str(conf['Label_Path']), encoding='utf-8'))
+    font_names = json.load(open(os.path.abspath(conf['Label_Path']), encoding='utf-8'))
 
     #Flask Config
-    AUTH = json.load(open(str(conf['Auth_List_Path']), encoding='utf-8'))
+    AUTH = json.load(open(os.path.abspath(conf['Auth_List_Path']), encoding='utf-8'))
     ALLOWED_EXTENSIONS = json.loads(str(conf['Allowed_Extensions_List']).replace('\'', '"'))
     LISTEN = conf['Listen']
     PORT = conf['Port']
     DEBUG = conf['Debug']
-    CERT_PATH = conf['Cert_Path']
-    KEY_PATH = conf['Key_Path']
+    CERT_PATH = os.path.abspath(conf['Cert_Path'])
+    KEY_PATH = os.path.abspath(conf['Key_Path'])
 
 #Additional Requirement
-import os
 import uuid
 import math
 import time
@@ -239,12 +239,16 @@ def api():
                             obj, ft = font_identifier(path)
 
                             #Instruct response
-                            json = '{"Font": "' + str(ft) + '", "Text": "' + str(obj['Text']) + '", "Rect": ' + str(obj['TextRectangles']).replace('\'', '"') + ', "Time":' + str(time.time()) + '}'
-                            response = app.response_class(response = flask.json.dumps(json), status = response.status_code, mimetype = 'application/json')
+                            res_json = json.loads('{"Font": "' + str(ft) + '", "Text": "' + str(obj['Text']) + '", "Rect": ' + str(obj['TextRectangles']).replace('\'', '"') + ', "Time":' + str(time.time()) + '}')
+                            response = app.response_class(response = flask.json.dumps(res_json), status = response.status_code, mimetype = 'application/json')
+
+                            print('Response to client ->')
+                            print(json.dumps(res_json, indent = 4, sort_keys = True))
 
                         except Exception as error:
                             #Server Error
                             response.status_code = 502
+
                             print('Error -> ', error)
 
                         #Delete recieved Image
@@ -258,6 +262,7 @@ def api():
                 else:
                     #Unsupported Image Type
                     response.status_code = 415
+
                     print('Extension ->', image_ext)
 
             else:
@@ -267,6 +272,7 @@ def api():
         except Exception as error:
             #Request Error
             response.status_code = 400
+
             print('Error -> ', error)
 
         return response
