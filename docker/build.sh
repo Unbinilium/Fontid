@@ -12,5 +12,5 @@ cp '../src/requirements.txt' 'requirements.txt'
 sudo docker build -t font-identifier-restapi .
 
 #Cleanup
-rm -fr 'app'
+rm -fr 'app' 'requirements.txt'
 popd
