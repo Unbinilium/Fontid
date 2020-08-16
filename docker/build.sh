@@ -1,8 +1,7 @@
 #!/bin/bash
 
 #Pushd to docker directory
-BASE_DIR="$(dirname \"$0\")"
-pushd ${BASE_DIR}
+pushd "$(dirname $0)"
 
 #Copy required files
 mkdir 'app'
