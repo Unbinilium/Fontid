@@ -1,5 +1,5 @@
 # Generated models
-*.h5
+model/
 
 # IPython
 .ipynb_checkpoints
