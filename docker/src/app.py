@@ -35,10 +35,8 @@ try:
 
 except Exception as error:
     print('Cannot open config file \'config.json\' in <host data volume>\n')
-    print(error)
     print(usage)
     sys.exit()
-    
 
 #Check if file exist
 for key in conf:
@@ -49,7 +47,7 @@ for key in conf:
 
             #Bypass ssl path check
             if not key in list(['Cert_Path', 'Key_Path']):
-                print('Cannot found file -> \'' + conf[key] + '\' in <host data volume>')
+                print('Cannot found file -> \'' + conf[key][len('/data/'):] + '\' in <host data volume>')
                 print(usage)
                 sys.exit()
 
