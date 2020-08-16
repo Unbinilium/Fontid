@@ -1,3 +1,11 @@
+## Overview
+
+- `auth` API authority json file folder
+
+- `ssl` SSL cert and key file folder 
+
+- `static` default webpage for server
+
 ## Install Dependencies
 
 ```bash
@@ -9,7 +17,7 @@ sudo python3 -m pip install -r font-identifier/src/requirements.txt --use-featur
 ```bash
 sudo pyrhon3 font-identifier/src/server.py <configuration file path>
 ```
-Replace `<configuration file path>` with yours.
+Replace `<configuration file path>` with yours, then open `https://localhost:443` in browser to test(default).
 
 ## Configuration
 
