@@ -5,7 +5,7 @@ import json
 
 #Usage
 usage = '''
-Usage: docker run -p <host listen port>:8080 -v <host data volume>:/data font-identifier-rest-api
+Usage: sudo docker run -p <host listen port>:8080 -v <host data volume>:/data font-identifier-rest-api
 
 Note: A config file named 'config.json' in <host data volume> is required.
 
