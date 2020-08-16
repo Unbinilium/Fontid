@@ -1,6 +1,8 @@
 ## Curl
 
-- `curl -X POST -F 'image=@/example.png' https://localhost/api?auth=unbinilium&verify=sha1_of_example.png`
+```bash
+curl -X POST -F 'image=@/example.png' https://localhost/api?auth=unbinilium&verify=sha1_of_example.png
+````
 
 ## iOS & iPad OS
 
