@@ -9,7 +9,7 @@ cp '../src/server.py' 'app/server.py'
 cp '../src/requirements.txt' 'requirements.txt'
 
 #Build docker image
-sudo docker build -t font-identifier-restapi .
+sudo docker build -t font-identifier-rest-api .
 
 #Cleanup
 rm -fr 'app' 'requirements.txt'
