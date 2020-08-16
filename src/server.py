@@ -26,10 +26,10 @@ else:
 
     #Model
     model_path = conf['Model_Path']
-    font_names = json.loads(str(conf['Font_Name_List']).replace('\'', '"'))
+    font_names = json.load(open(str(conf['Label_Path']), encoding='utf-8'))
 
     #Flask Config
-    AUTH = json.loads(str(conf['Auth_List']).replace('\'', '"'))
+    AUTH = json.load(open(str(conf['Auth_List_Path']), encoding='utf-8'))
     ALLOWED_EXTENSIONS = json.loads(str(conf['Allowed_Extensions_List']).replace('\'', '"'))
     LISTEN = conf['Listen']
     PORT = conf['Port']
@@ -115,7 +115,7 @@ def font_identifier(image_path):
     request.set_ImageURL(image_url)
 
     #Pre-config request
-    min_height = int(decoded_info['ImageHeight']['value']) / 20
+    min_height = int(int(decoded_info['ImageHeight']['value']) / 20)
     request.set_MinHeight(int(min_height))
     request.set_OutputProbability(True)
 
@@ -135,7 +135,7 @@ def font_identifier(image_path):
     objects = parsed['Data']['Results']
 
     #Cal image center O(o_x0, o_y0)
-    o_x0, o_y0 = int(decoded_info['ImageWidth']['value']) / 2, int(decoded_info['ImageHeight']['value']) / 2
+    o_x0, o_y0 = int(decoded_info['ImageWidth']['value']) / 2.0, int(decoded_info['ImageHeight']['value']) / 2.0
 
     for object in objects:
 
