@@ -61,4 +61,3 @@ with open('/app/config.json', 'w') as outfile:
 #Exec server.py
 command = 'python \'/app/server.py\' \'/app/config.json\''
 os.system(command)
- 
