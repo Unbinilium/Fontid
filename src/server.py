@@ -4,7 +4,7 @@ import sys
 import json
 
 #Usage
-usage = '\nUsage: python3 ' + sys.argv[0] + ' <configuration file path>'
+usage = 'Usage: python3 ' + sys.argv[0] + ' <configuration file path>'
 
 #Conf Loader
 if len(sys.argv) < 2:
@@ -12,7 +12,7 @@ if len(sys.argv) < 2:
     sys.exit()
 
 else:
-    conf = json.load(open(sys.argv[1], encoding='utf-8'))
+    conf = json.load(open(sys.argv[1], encoding = 'utf-8'))
 
     #Access_key
     access_key_id = conf['Access_Key_ID']
@@ -24,13 +24,15 @@ else:
 
     #OCR
     location = conf['OCR_Location']
+    min_height_scale = conf['Min_Height_Scale']
+    min_probability = conf['Min_Probability']
 
     #Model
     model_path = conf['Model_Path']
-    font_names = json.load(open(os.path.abspath(conf['Label_Path']), encoding='utf-8'))
+    font_names = json.load(open(os.path.abspath(conf['Label_Path']), encoding = 'utf-8'))
 
     #Flask Config
-    AUTH = json.load(open(os.path.abspath(conf['Auth_List_Path']), encoding='utf-8'))
+    AUTH = json.load(open(os.path.abspath(conf['Auth_List_Path']), encoding = 'utf-8'))
     ALLOWED_EXTENSIONS = json.loads(str(conf['Allowed_Extensions_List']).replace('\'', '"'))
     LISTEN = conf['Listen']
     PORT = conf['Port']
@@ -115,7 +117,7 @@ def font_identifier(image_path):
     request.set_ImageURL(image_url)
 
     #Pre-config request
-    min_height = int(int(decoded_info['ImageHeight']['value']) / 20)
+    min_height = int(decoded_info['ImageHeight']['value']) * float(min_height_scale)
     request.set_MinHeight(int(min_height))
     request.set_OutputProbability(True)
 
@@ -131,8 +133,14 @@ def font_identifier(image_path):
     print('Response ->')
     print(json.dumps(parsed, indent = 4, sort_keys = True))
 
+    objects = []
     distances = []
-    objects = parsed['Data']['Results']
+    objects_unfiltered = parsed['Data']['Results']
+
+    #Filter probability by min_probability
+    for object_unfiltered in objects_unfiltered:
+        if float(object_unfiltered['Probability']) > float(min_probability):
+            objects.append(object_unfiltered)
 
     #Cal image center O(o_x0, o_y0)
     o_x0, o_y0 = int(decoded_info['ImageWidth']['value']) / 2.0, int(decoded_info['ImageHeight']['value']) / 2.0
@@ -281,4 +289,8 @@ def api():
     else:
         return flask.redirect(flask.url_for('index'))
 
-app.run(host = LISTEN, port = PORT, ssl_context = (CERT_PATH, KEY_PATH), debug = DEBUG)
+#Run font-indentifier app server
+if CERT_PATH and KEY_PATH:
+    app.run(host = LISTEN, port = PORT, ssl_context = (CERT_PATH, KEY_PATH), debug = DEBUG)
+else:
+    app.run(host = LISTEN, port = PORT, debug = DEBUG)
