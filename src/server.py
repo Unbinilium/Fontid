@@ -37,8 +37,16 @@ else:
     LISTEN = conf['Listen']
     PORT = conf['Port']
     DEBUG = conf['Debug']
-    CERT_PATH = os.path.abspath(conf['Cert_Path'])
-    KEY_PATH = os.path.abspath(conf['Key_Path'])
+
+    #If Cert and Key are not provided, disable SSL
+    c, k = conf['Cert_Path'], conf['Key_Path']
+    if c and k:
+        APP_SSL = True
+        CERT_PATH = os.path.abspath(c)
+        KEY_PATH = os.path.abspath(k)
+
+    else:
+        APP_SSL = False
 
 #Additional Requirement
 import uuid
@@ -290,7 +298,8 @@ def api():
         return flask.redirect(flask.url_for('index'))
 
 #Run font-indentifier app server
-if CERT_PATH and KEY_PATH:
+if APP_SSL:
     app.run(host = LISTEN, port = PORT, ssl_context = (CERT_PATH, KEY_PATH), debug = DEBUG)
+
 else:
     app.run(host = LISTEN, port = PORT, debug = DEBUG)
