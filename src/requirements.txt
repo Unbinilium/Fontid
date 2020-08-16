@@ -1,0 +1,8 @@
+aliyun-python-sdk-core
+aliyunsdkocr
+flask
+keras
+matplotlib
+numpy
+oss2
+pillow

@@ -26,24 +26,26 @@ else:
 
     #Model
     model_path = conf['Model_Path']
-    font_names = conf['Font_Name_List']
+    font_names = json.loads(str(conf['Font_Name_List']).replace('\'', '"'))
 
     #Flask Config
-    AUTH = conf['Auth_List']
-    ALLOWED_EXTENSIONS = conf['Allowed_Extensions_List']
+    AUTH = json.loads(str(conf['Auth_List']).replace('\'', '"'))
+    ALLOWED_EXTENSIONS = json.loads(str(conf['Allowed_Extensions_List']).replace('\'', '"'))
     LISTEN = conf['Listen']
     PORT = conf['Port']
+    DEBUG = conf['Debug']
+    CERT_PATH = conf['Cert_Path']
+    KEY_PATH = conf['Key_Path']
 
 #Additional Requirement
 import os
 import uuid
-import json
 import math
 import time
 import codecs
 import hashlib
-import PIL
 import flask
+import PIL
 import numpy as np
 from matplotlib import cm as cm
 from matplotlib import pyplot as plt
@@ -269,8 +271,8 @@ def api():
 
         return response
 
-    #Fallback to Path / if uses GET
+    #Fallback to index if uses GET
     else:
-        return '<meta http-equiv="refresh" content="0;url=/">'
+        return flask.redirect(flask.url_for('index'))
 
-app.run(host = LISTEN, port = PORT, debug = False)
+app.run(host = LISTEN, port = PORT, ssl_context = (CERT_PATH, KEY_PATH), debug = DEBUG)

@@ -6,8 +6,11 @@
     "OCR_Location": "cn-shanghai",
     "Model_Path": "/home/unbinilium/Documents/font-identifier/models/keras.h5",
     "Font_Name_List": "['Amiri-Regular', 'Manrope-Regular', 'Martel-Regular', 'Pacifico-Regular', 'Sacramento-Regular']",
-    "Auth_List": "['Admin', 'Unbinilium']",
-    "Allowed_Extensions_List": "['png', 'jpg', 'jpeg', 'gif']",
+    "Auth_List": "['admin', 'unbinilium']",
+    "Allowed_Extensions_List": "['.png', '.jpg', '.jpeg', '.gif']",
     "Listen": "localhost",
-    "Port": 80
+    "Port": 443,
+    "Cert_Path": "/home/unbinilium/Documents/font-identifier/src/ssl/selfsigned-cert.crt",
+    "Key_Path": "/home/unbinilium/Documents/font-identifier/src/ssl/selfsigned-key.key",
+    "Debug": true
 }
