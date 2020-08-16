@@ -46,9 +46,12 @@ for key in conf:
         conf[key] = '/data/' + conf[key]
 
         if not os.path.isfile(conf[key]):
-            print('Cannot found file -> \'' + conf[key] + '\' in <host data volume>')
-            print(usage)
-            sys.exit()
+
+            #Bypass ssl path check
+            if not key in list(['Cert_Path', 'Key_Path']):
+                print('Cannot found file -> \'' + conf[key] + '\' in <host data volume>')
+                print(usage)
+                sys.exit()
 
 #Set listen host and port
 conf.update({"Listen": '0.0.0.0', "Port": 8080})
