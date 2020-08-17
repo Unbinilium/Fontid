@@ -4,16 +4,8 @@
 
 ## Docker Image
 
-- Image URL
-
-```
-registry.cn-shanghai.aliyuncs.com/unbinilium/font-identifier-rest-api:latest
-```
-
-- Usage
-
 ```bash
-sudo docker pull registry.cn-shanghai.aliyuncs.com/unbinilium/font-identifier-rest-api:latest
+sudo docker pull unbinilium/font-identifier-rest-api:latest
 ```
 
 ## Build Image
