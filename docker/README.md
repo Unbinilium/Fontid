@@ -4,6 +4,8 @@
 
 ## Docker Image
 
+![Fontid Action](https://github.com/Unbinilium/Fontid/workflows/Fontid%20Action/badge.svg?branch=master&event=push)
+
 ```bash
 sudo docker pull unbinilium/font-identifier-rest-api:latest
 ```
