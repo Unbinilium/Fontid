@@ -1,3 +1,21 @@
+## Overview
+
+- `src` docker command app source
+
+## Docker Image
+
+- Image URL
+
+```
+registry.cn-shanghai.aliyuncs.com/unbinilium/font-identifier-rest-api:latest
+```
+
+- Usage
+
+```bash
+sudo docker pull registry.cn-shanghai.aliyuncs.com/unbinilium/font-identifier-rest-api:latest
+```
+
 ## Build Image
 
 ```bash
