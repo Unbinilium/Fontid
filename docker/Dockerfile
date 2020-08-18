@@ -28,4 +28,4 @@ RUN useradd appuser && chown -R appuser /src
 USER appuser
 
 # During debugging, this entry point will be overridden
-CMD ["python", "/app.py", "/data/config.json"]
+CMD ["python", "app.py", "/data/config.json"]
