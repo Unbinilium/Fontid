@@ -1,6 +1,8 @@
 ## Overview
 
-- `src` docker command app source
+- `app.py` - docker command exec handler source
+
+- `build.sh` - build docker image
 
 ## Docker Image
 
