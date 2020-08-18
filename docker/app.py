@@ -43,12 +43,12 @@ except Exception as error:
 #Check if file exist
 for key in conf:
     if '_Path' in key:
-        conf.upadte({key: os.path.join('/data/', conf[key])})
+        #Bypass ssl path check
+        if (not key in list(['Cert_Path', 'Key_Path'])) or ((key in list(['Cert_Path', 'Key_Path'])) and conf[key]):
+            conf.update({key: os.path.join('/data/', conf[key])})
 
-        if not os.path.isfile(conf[key]):
-
-            #Bypass ssl path check
-            if not key in list(['Cert_Path', 'Key_Path']):
+            #Check if file exist
+            if not os.path.isfile(conf[key]):
                 print('Cannot found file -> \'' + conf[key] + '\' in <docker data volume>')
                 print(usage)
 
