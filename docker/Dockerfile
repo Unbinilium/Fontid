@@ -24,7 +24,7 @@ ADD app.py .
 VOLUME [ "/data" ]
 
 # Switching to a non-root user
-RUN useradd appuser && chown -R appuser /
+RUN useradd appuser && chown -R appuser /src
 USER appuser
 
 # During debugging, this entry point will be overridden
