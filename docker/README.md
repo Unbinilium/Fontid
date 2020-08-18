@@ -22,7 +22,7 @@ sudo bash build.sh
 sudo docker run -p <host listen port>:8080 -v <host data volume>:/data font-identifier-rest-api
 ```
 
-Replace `<host listen port>` and `<host data volume>` with yours, then open `https://localhost:<host listen port>` in browser to test(default).
+Replace `<host listen port>` and `<host data volume>` with yours, then open `https(or http)://localhost:<port>` in browser to test.
 
 ## Configuration
 
