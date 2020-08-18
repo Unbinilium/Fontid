@@ -9,16 +9,15 @@ ENV PYTHONDONTWRITEBYTECODE 1
 # Turns off buffering for easier container logging
 ENV PYTHONUNBUFFERED 1
 
-# Install pip requirements
-ADD requirements.txt .
-RUN python -m pip install -r requirements.txt --use-feature=2020-resolver
-
-# Add app.py
-ADD app.py .
-
 # Add src
 WORKDIR /src
 ADD src /src
+
+# Install pip requirements
+RUN python -m pip install -r /src/requirements.txt --use-feature=2020-resolver
+
+# Add app.py
+ADD app.py .
 
 # Create /tmp
 RUN mkdir /tmp
