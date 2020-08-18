@@ -1,4 +1,10 @@
+## Dev and Train Model
+
+- `font-identifier.ipynb`
+
 ## Configurations
+
+- `config.json`(not provided)
 
 ### Identical
 
