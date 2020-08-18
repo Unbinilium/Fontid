@@ -1,3 +1,4 @@
+# Set base image
 FROM python:3.8-slim
 
 # Container port
@@ -18,9 +19,6 @@ RUN python -m pip install -r /src/requirements.txt --use-feature=2020-resolver
 
 # Add app.py
 ADD app.py .
-
-# Create /tmp
-RUN mkdir /tmp
 
 # Create volume
 VOLUME [ "/data" ]
