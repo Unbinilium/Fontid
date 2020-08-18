@@ -1,5 +1,5 @@
-# Generated models
-models/
+# Custom Folders
+data/
 
 # IPython
 .ipynb_checkpoints

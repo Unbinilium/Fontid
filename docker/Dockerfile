@@ -1,5 +1,6 @@
 FROM python:3.8-slim
 
+# Container port
 EXPOSE 8080
 
 # Keeps Python from generating .pyc files in the container
@@ -12,10 +13,17 @@ ENV PYTHONUNBUFFERED 1
 ADD requirements.txt .
 RUN python -m pip install -r requirements.txt --use-feature=2020-resolver
 
-WORKDIR /app
-ADD app /app
-COPY src/app.py /app.py
+# Add app.py
+ADD app.py .
 
+# Add src
+WORKDIR /src
+ADD src /src
+
+# Create /tmp
+RUN mkdir /tmp
+
+# Create volume
 VOLUME [ "/data" ]
 
 # Switching to a non-root user

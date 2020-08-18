@@ -5,11 +5,10 @@ on:
     branches: 
       - master
     paths-ignore:
-      - 'docs/*'
-      - 'README.md'
-      - '*/README.md'
       - 'LICENSE'
-
+      - 'README.md'
+      - '**/README.md'
+      - 'docs/*'
 jobs:
   fontid-action:
     runs-on: ubuntu-latest

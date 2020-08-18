@@ -34,6 +34,7 @@ else:
     #Flask Config
     AUTH = json.load(open(os.path.abspath(conf['Auth_List_Path']), encoding = 'utf-8'))
     ALLOWED_EXTENSIONS = json.loads(str(conf['Allowed_Extensions_List']).replace('\'', '"'))
+    UPLOAD_LIMIT = conf['Upload_Limit']
     LISTEN = conf['Listen']
     PORT = conf['Port']
     DEBUG = conf['Debug']
@@ -210,12 +211,12 @@ def font_identifier(image_path):
 app = flask.Flask(__name__)
 
 #Limit Image Size to 3MB
-app.config['MAX_CONTENT_LENGTH'] = 3 * 1024 * 1024
+app.config['MAX_CONTENT_LENGTH'] = int(UPLOAD_LIMIT) * 1024 * 1024
 
 #Path /
 @app.route('/', methods=['GET'])
 def index():
-    index = codecs.open(PATH + '/static/index.html', 'r', 'utf-8').read()
+    index = codecs.open(os.path.join(PATH, 'static/index.html'), 'r', 'utf-8').read()
 
     return index
 
