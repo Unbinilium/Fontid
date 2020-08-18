@@ -20,9 +20,7 @@ jobs:
 
       - name: Copy files
         run: |
-          mkdir 'docker/app'
-          cp 'src/server.py' 'docker/app/server.py'
-          cp 'src/requirements.txt' 'docker/requirements.txt'
+          cp -r 'src' 'docker/'
 
       - name: Push to Docker Hub
         uses: docker/build-push-action@v1
