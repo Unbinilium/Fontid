@@ -105,10 +105,11 @@ def font_identifier(image_path):
     request = RecognizeCharacterRequest()
     request.set_accept_format('json')
 
-    #Upload with SHA1 hashed name
+    #Upload with SHA1 hashed name, set image to private
     file_extension = os.path.splitext(image_path)[1]
     key = hashlib.sha1(open(image_path, 'rb').read()).hexdigest() + file_extension
     bucket.put_object_from_file(key, image_path)
+    bucket.put_object_acl(key, oss2.OBJECT_ACL_PRIVATE)
 
     #Get image info from OSS
     info = bucket.get_object(key, process = 'image/info')
@@ -119,8 +120,8 @@ def font_identifier(image_path):
     print(json.dumps(decoded_info, indent = 4, sort_keys = True))
 
     #Struct image URL
-    image_url = 'https://' + bucket_name + '.' + endpoint.replace("https://","") + '/' + key
-    
+    image_url = bucket.sign_url('GET', key, 60)
+
     print('Image URL -> ' + image_url)
 
     #Set OCR image_url
