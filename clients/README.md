@@ -6,4 +6,4 @@ curl -X POST -F 'image=@/example.png' 'https://localhost/api?auth=unbinilium&ver
 
 ## iOS & iPad OS
 
-- Shortcuts - [Font Identifier](https://www.icloud.com/shortcuts/466528acb6c14f93a6ca3db617f4390f)
+- Shortcuts - [Font Identifier](https://www.icloud.com/shortcuts/5106b20f870848ccb9ed7ea9640daf32)
