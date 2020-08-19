@@ -120,6 +120,7 @@ def font_identifier(image_path):
 
     #Struct image URL
     image_url = 'https://' + bucket_name + '.' + endpoint.replace("https://","") + '/' + key
+    
     print('Image URL -> ' + image_url)
 
     #Set OCR image_url
@@ -131,7 +132,17 @@ def font_identifier(image_path):
     request.set_OutputProbability(True)
 
     #Send request to OCR server and get response
-    response = client.do_action_with_exception(request)
+    try:
+        response = client.do_action_with_exception(request)
+
+    except Exception as error:
+        print('Error -> ', error)
+
+        #Delete OSS image
+        bucket.delete_object(key)
+
+        #Raise Exception to outsider try/except
+        raise Exception(error)
 
     #Delete OSS image
     bucket.delete_object(key)
@@ -238,12 +249,11 @@ def api():
 
                 #Verify supported image type
                 if image_ext in ALLOWED_EXTENSIONS:
-
                     #Recieve Image, random uuid named, stored in /tmp
                     path = os.path.join('/tmp/', str(uuid.uuid4()) + image_ext)
                     image.save(path)
                     image_sha1 = hashlib.sha1(open(path, 'rb').read()).hexdigest()
-                
+
                     print('Image Path -> ', path)
                     print('Image SHA1 -> ', verify, ' - ', image_sha1)
 
@@ -269,8 +279,7 @@ def api():
                             print('Error -> ', error)
 
                         #Delete recieved Image
-                        command = 'rm -f ' + path
-                        os.system(command)
+                        os.remove(path)
 
                     else:
                         #Precondition Failed (SHA1 Verify Failed)
@@ -292,6 +301,7 @@ def api():
 
             print('Error -> ', error)
 
+        #Return response to client
         return response
 
     #Fallback to index if uses GET
