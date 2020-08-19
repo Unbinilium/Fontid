@@ -215,7 +215,7 @@ def font_identifier(image_path):
     data = []
     data.append(arr_img)
     data = np.asarray(data, dtype = "float") / 255.0
-    y = model.predict_classes(data)
+    y = np.argmax(model.predict(data), axis = -1)
 
     return objects[index_min], rev_conv_label(int(y[0]))
 
