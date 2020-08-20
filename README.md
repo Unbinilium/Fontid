@@ -6,13 +6,11 @@ Only for example, please visit [DeepFont](https://📖.unbinilium.me/programming
 
 # Overview
 
-- `clients` - clients manual
+- `docker` - docker image source and build script
 
-- `docker` - docker build source and manual
+- `docs` - clients for test, model training and configuration manual
 
-- `docs` - model training manual and configuration manual
-
-- `src` - development source code
+- `src` - font-identifier-rest-api source code
 
 # License
 
