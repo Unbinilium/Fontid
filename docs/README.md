@@ -13,7 +13,13 @@ curl -X POST -F 'image=@/example.png' 'https://localhost/api?auth=unbinilium&ver
 
 ## Dev and Train Model
 
+### Manual
+
 - `font-identifier.ipynb`
+
+### Files
+
+- `datasets and model` - stored in [MEGA](https://mega.nz/folder/pFgQgCKJ#J2ox5ueOIZ_UgtvBoD9jOA)
 
 ## Configurations
 
